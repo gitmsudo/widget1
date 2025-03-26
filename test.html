@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Widget Test</title>
+  <!-- Load Tailwind from local build instead of CDN -->
+  <link rel="stylesheet" href="widget.css">
+</head>
+<body>
+  <h1>Test Page</h1>
+  <p>This is a test page to demonstrate the chat widget.</p>
+
+  <!-- Widget will be mounted here -->
+  <div id="chat-widget"></div>
+
+  <script>
+    window.chatWidgetConfig = {
+      ssoId: "APG",
+      sourceId: "APG",
+      primaryColor: "#0284c7",
+      position: "bottom-right"
+    };
+  </script>
+
+  <!-- Load React and ReactDOM from local copies instead of unpkg -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" integrity="sha512-8Q6Y9XnTbOE+JNvjBQwJ2H8S+UV4uA6hiRykhdtIyDYZ2TprdNmWOUaKdGzOhyr4dCyk287OejbPvwl7lrfqrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" integrity="sha512-MOCpqoRoisCTwJ8vQQiciZv0qcpROCidek3GTFS6KTk2+y7munJIlKCVkFCYY+p3ErYFXCjmFjnfTTRSC1OHWQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+  <!-- Load our widget -->
+  <script src="chat-widget.umd.js"></script>
+
+  <script>
+    function initWidget() {
+      try {
+        const element = document.getElementById('chat-widget');
+        if (!element) {
+          throw new Error('Chat widget element not found');
+        }
+
+        if (!window.CBot || !window.CBot.init) {
+          console.error('CBot object:', window.CBot);
+          throw new Error('CBot not initialized properly');
+        }
+
+        window.CBot.init(element);
+      } catch (error) {
+        console.error('Error initializing widget:', error);
+      }
+    }
+
+    window.addEventListener('load', function() {
+      console.log('Window loaded, CBot available:', !!window.CBot);
+      initWidget();
+    });
+  </script>
+</body>
+</html> 
